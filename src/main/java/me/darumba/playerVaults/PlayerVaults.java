@@ -26,7 +26,7 @@ public class PlayerVaults extends JavaPlugin implements CommandExecutor {
    public void onEnable() {
       this.saveDefaultConfig();
       this.setupVaultFile();
-      this.getCommand("pv").setExecutor(this);
+      this.getCommand("playervaults").setExecutor(this);
       this.getLogger().info("PlayerVaults has been enabled!");
    }
 
