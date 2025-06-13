@@ -24,7 +24,6 @@ public class PlayerVaults extends JavaPlugin implements CommandExecutor {
    private HashMap<UUID, HashMap<Integer, Inventory>> vaults = new HashMap();
 
    public void onEnable() {
-      this.saveDefaultConfig();
       this.setupVaultFile();
       this.getCommand("playervaults").setExecutor(this);
       this.getLogger().info("PlayerVaults has been enabled!");
