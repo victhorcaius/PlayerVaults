@@ -51,7 +51,7 @@ public class PlayerVaults extends JavaPlugin implements CommandExecutor {
    private Inventory getVault(UUID uuid, int vaultNumber) {
       this.vaults.putIfAbsent(uuid, new HashMap());
       if (!((HashMap)this.vaults.get(uuid)).containsKey(vaultNumber)) {
-         Inventory inv = Bukkit.createInventory((InventoryHolder)null, 27, "Vault #" + vaultNumber);
+         Inventory inv = Bukkit.createInventory((InventoryHolder)null, 27, "Kho #" + vaultNumber);
          ((HashMap)this.vaults.get(uuid)).put(vaultNumber, inv);
       }
 
@@ -102,13 +102,11 @@ public class PlayerVaults extends JavaPlugin implements CommandExecutor {
       if (player.hasPermission("pv.admin")) {
          return true;
       } else {
-         for(int i = vaultNumber; i <= 99; ++i) {
-            if (player.hasPermission("pv.vault." + i)) {
-               return true;
-            }
+         if (player.hasPermission("pv.vault." + vaultNumber)) {
+            return true;
+         } else {
+            return false;
          }
-
-         return false;
       }
    }
 
@@ -122,55 +120,55 @@ public class PlayerVaults extends JavaPlugin implements CommandExecutor {
          if (args.length == 1) {
             try {
                int vaultNumber = Integer.parseInt(args[0]);
-               if (vaultNumber < 1 || vaultNumber > 99) {
-                  player.sendMessage(String.valueOf(ChatColor.RED) + "Invalid vault number! Choose between 1-99.");
+               if (vaultNumber < 1 || vaultNumber > 21) {
+                  player.sendMessage(String.valueOf(ChatColor.RED) + "Số kho không hợp lệ! Chọn từ 1-21.");
                   return true;
                }
 
                if (!this.hasVaultPermission(player, vaultNumber)) {
-                  player.sendMessage(String.valueOf(ChatColor.RED) + "You don't have permission to access this vault!");
+                  player.sendMessage(String.valueOf(ChatColor.RED) + "Bạn không có quyền để mở kho này!");
                   return true;
                }
 
                Inventory vault = this.getVault(player.getUniqueId(), vaultNumber);
                player.openInventory(vault);
                var10001 = String.valueOf(ChatColor.GREEN);
-               player.sendMessage(var10001 + "Opening Vault #" + vaultNumber + "...");
+               player.sendMessage(var10001 + "Đang mở kho #" + vaultNumber + "...");
             } catch (NumberFormatException var9) {
-               player.sendMessage(String.valueOf(ChatColor.RED) + "Invalid number! Use /pv <1-99>.");
+               player.sendMessage(String.valueOf(ChatColor.RED) + "Số kho không hợp lệ! Chọn từ 1-21.");
             }
 
             return true;
          } else if (args.length == 2) {
             if (!player.hasPermission("pv.admin")) {
-               player.sendMessage(String.valueOf(ChatColor.RED) + "You don't have permission to access other players' vaults!");
+               player.sendMessage(String.valueOf(ChatColor.RED) + "Bạn không có quyền để mở kho này!");
                return true;
             } else {
                Player target = Bukkit.getPlayer(args[0]);
                if (target != null && target.isOnline()) {
                   try {
                      int vaultNumber = Integer.parseInt(args[1]);
-                     if (vaultNumber < 1 || vaultNumber > 99) {
-                        player.sendMessage(String.valueOf(ChatColor.RED) + "Invalid vault number! Choose between 1-99.");
+                     if (vaultNumber < 1 || vaultNumber > 21) {
+                        player.sendMessage(String.valueOf(ChatColor.RED) + "Số kho không hợp lệ! Chọn từ 1-21.");
                         return true;
                      }
 
                      Inventory vault = this.getVault(target.getUniqueId(), vaultNumber);
                      player.openInventory(vault);
                      var10001 = String.valueOf(ChatColor.GREEN);
-                     player.sendMessage(var10001 + "Opening " + target.getName() + "'s Vault #" + vaultNumber + "...");
+                     player.sendMessage(var10001 + "Đang mở kho #" + vaultNumber + " của" + target.getName() + "...");
                   } catch (NumberFormatException var10) {
-                     player.sendMessage(String.valueOf(ChatColor.RED) + "Invalid number! Use /pv <player> <1-99>.");
+                     player.sendMessage(String.valueOf(ChatColor.RED) + "Số kho không hợp lệ! Chọn từ 1-21.");
                   }
 
                   return true;
                } else {
-                  player.sendMessage(String.valueOf(ChatColor.RED) + "Player not found or offline.");
+                  player.sendMessage(String.valueOf(ChatColor.RED) + "Người chơi đó hiện không trực tuyến!");
                   return true;
                }
             }
          } else {
-            player.sendMessage(String.valueOf(ChatColor.RED) + "Usage: /pv <number> OR /pv <player> <number>");
+            player.sendMessage(String.valueOf(ChatColor.RED) + "Sử dụng: /pv [player] <1-21>");
             return true;
          }
       }
