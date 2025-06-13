@@ -1,0 +1,27 @@
+name: PlayerVaults
+main: me.darumba.playerVaults.PlayerVaults
+version: 1.6
+api-version: 1.16
+author: Darumba
+description: This was made by Darumba [ComputerJester79 On SpigotMC] If you did not download from SpigotMC, you may not have a genuine plugin | Actual Description -
+commands:
+  playervaults:
+    aliases: ["pv"]
+    description: Open personal vaults
+    usage: /pv <1-99> OR /pv <player> <1-99>
+permissions:
+  pv.admin:
+    description: "Access any player's vault and edit contents"
+    default: op
+  pv.vault.1:
+    description: "Access Vault #1"
+    default: false
+  pv.vault.5:
+    description: "Access Vaults #1-5"
+    default: false
+  pv.vault.10:
+    description: "Access Vaults #1-10"
+    default: false
+  pv.vault.99:
+    description: "Access Vaults #1-99"
+    default: false
